@@ -5,7 +5,7 @@ Este proyecto consiste en realizar el análisis del espectro de fármacos antide
 
 Los objetivos específicos del presente trabajo son:
 
-**1)** Recopilar información sobre los antidepresivos disponibles en bases de datos confiables de acceso público, en concreto, de su estructura química ([PubChem](https://pubchem.ncbi.nlm.nih.gov/)), cambios en los perfiles de expresión génica ante perturbaciones ([LINCS](https://lincsproject.org/)) y reacciones adversas de los fármacos antidepresivos ([SIDER 4.1](http://sideeffects.embl.de/drugs/) y [FAERS](https://open.fda.gov/data/faers/#:~:text=About%20FAERS,drug%20and%20therapeutic%20biologic%20products.)).
+**1)** Recopilar información sobre los antidepresivos disponibles en bases de datos confiables de acceso público, en concreto, de su estructura química ([PubChem](https://pubchem.ncbi.nlm.nih.gov/)), cambios en los perfiles de expresión génica ante perturbaciones ([LINCS](https://lincsproject.org/)) y reacciones adversas ([SIDER 4.1](http://sideeffects.embl.de/drugs/) y [FAERS](https://open.fda.gov/data/faers/#:~:text=About%20FAERS,drug%20and%20therapeutic%20biologic%20products.)).
 
 **2)** Clasificar a los fármacos antidepresivos en clusters de acuerdo con su a) semejanza estructural y b) semejanza funcional, determinada por matrices de similitud.
 
