@@ -16,7 +16,7 @@ print(inst)
 print(inst.info())
 
 # Mapear los datos de perturbaciones al df de niveles de expresión génica
-inst_selected = inst[['inst_id', 'pert_id', 'pert_iname', 'pert_dose', 'pert_time']]
+inst_selected = inst[['inst_id', 'pert_id', 'pert_iname', 'pert_dose', 'pert_time', 'cell_id']]
 inst_selected = inst_selected.set_index('inst_id').loc[df.columns]
 df = pd.concat([df, inst_selected.T])
 
@@ -27,6 +27,10 @@ ad = pd.read_csv('antidepressants.tsv', sep='\t')
 filtered_columns = df.loc['pert_iname'].isin(ad['pert_iname'])
 df_filtered = df.loc[:, filtered_columns]
 
+# Filtrar las columnas de 'df' incluyendo sólo instancias experimentales usando antidepresivos en tejido nervioso
+npc_columns = df.loc['cell_id'] == 'NPC'
+df_filtered = df_filtered.loc[:, npc_columns]
+
 # Encontrar las instancias experimentales con máxima dosis y tiempo de exposición dentro de cada 'pert_id'
 max_dose = df_filtered.loc['pert_dose'].groupby(df_filtered.loc['pert_id']).transform('max')
 max_time = df_filtered.loc['pert_time'].groupby(df_filtered.loc['pert_id']).transform('max')
@@ -34,13 +38,13 @@ max_time = df_filtered.loc['pert_time'].groupby(df_filtered.loc['pert_id']).tran
 # Crear una máscara para seleccionar las columnas que cumplen ambas condiciones
 mask = (df_filtered.loc['pert_dose'] == max_dose) & (df_filtered.loc['pert_time'] == max_time)
 
-# Filtrar las columnas de 'df' incluyendo sólo las instancias experimentales usando antidepresivos con máxima dosis y tiempo de exposición
+# Filtrar las columnas de 'df' incluyendo sólo las instancias experimentales usando antidepresivos en tejido nervioso con máxima dosis y tiempo de exposición
 df_final = df_filtered.loc[:, mask]
 
 print(df_final)
 
 # Calcular la mediana de los niveles de expresión normalizados por gen para cada pert_id
-df_filtered_medians = df_final.iloc[:-4].groupby(df_final.loc['pert_id'], axis=1).median()
+df_filtered_medians = df_final.iloc[:-5].groupby(df_final.loc['pert_id'], axis=1).median()
 
 # Añadir los datos de perturbaciones al df
 df_filtered_medians.loc['pert_iname'] = df_final.loc['pert_iname'].groupby(df_final.loc['pert_id']).first()
@@ -70,3 +74,4 @@ print(df_links)
 
 # Exportar archivo
 df_links.to_csv('LINCS_ad_ranked_genes_level4.csv', index=True)
+
